@@ -1,0 +1,22 @@
+{
+  "name": "makefile-parser",
+  "version": "1.0.0",
+  "description": "A parser for Makefiles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codepilot/makefile-parser.git"
+  },
+  "keywords": [
+    "Makefile",
+    "parser"
+  ],
+  "author": "codepilot",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codepilot/makefile-parser/issues"
+  }
+}
