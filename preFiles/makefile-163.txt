@@ -1,0 +1,1 @@
+     two-lines = echo foo; echo $(bar)

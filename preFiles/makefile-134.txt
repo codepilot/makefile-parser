@@ -1,0 +1,4 @@
+For example:
+     
+     foo := a.o b.o c.o
+     bar := $(foo:%.o=%.c)

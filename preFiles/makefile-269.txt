@@ -1,0 +1,2 @@
+     foolib(hack.o) : hack.o
+             ar cr foolib hack.o

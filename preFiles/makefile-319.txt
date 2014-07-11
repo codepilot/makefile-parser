@@ -1,0 +1,3 @@
+             $(PRE_INSTALL)     # Pre-install commands follow.
+             $(POST_INSTALL)    # Post-install commands follow.
+             $(NORMAL_INSTALL)  # Normal commands follow.

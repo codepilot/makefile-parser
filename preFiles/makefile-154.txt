@@ -1,0 +1,2 @@
+     temp = value
+     variable = $(temp) more

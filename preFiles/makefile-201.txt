@@ -1,0 +1,1 @@
+          $(patsubst %.o,%.c,$(objects))

@@ -1,0 +1,1 @@
+          objects = foo.o bar.o baz.o

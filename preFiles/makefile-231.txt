@@ -1,0 +1,1 @@
+     map = $(foreach a,$(2),$(call $(1),$(a)))

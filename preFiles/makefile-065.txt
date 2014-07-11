@@ -1,0 +1,4 @@
+          bigoutput : text.g
+                  generate text.g -big > bigoutput
+          littleoutput : text.g
+                  generate text.g -little > littleoutput

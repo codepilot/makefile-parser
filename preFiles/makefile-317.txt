@@ -1,0 +1,6 @@
+          # Make sure all installation directories (e.g. $(bindir))
+          # actually exist by making them if necessary.
+          installdirs: mkinstalldirs
+                  $(srcdir)/mkinstalldirs $(bindir) $(datadir) \
+                                          $(libdir) $(infodir) \
+                                          $(mandir)

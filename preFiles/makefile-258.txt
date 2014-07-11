@@ -1,0 +1,8 @@
+     %.o: %.c
+             $(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+     
+     %.o : %.f
+             $(COMPILE.F) $(OUTPUT_OPTION) $<
+     
+     lib/%.o: lib/%.c
+             $(CC) -fPIC -c $(CFLAGS) $(CPPFLAGS) $< -o $@

@@ -1,0 +1,2 @@
+     mk_temp.dll: mk_temp.c
+             $(CC) -shared -o $ $< -lgnumake-1

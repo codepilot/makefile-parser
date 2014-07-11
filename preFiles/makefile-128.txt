@@ -1,0 +1,2 @@
+     ${subdirs}:
+             ${MAKE} -C $@ all

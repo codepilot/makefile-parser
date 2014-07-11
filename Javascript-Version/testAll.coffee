@@ -1,0 +1,1 @@
+console.log JSON.stringify require('./seu.coffee').unserial_eu './../preFiles_results/makefile_004.seu'

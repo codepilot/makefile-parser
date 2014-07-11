@@ -1,0 +1,1 @@
+     ar r foo.a dir/file.o

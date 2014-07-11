@@ -1,0 +1,5 @@
+     ifdef bletch
+     ifeq "$(origin bletch)" "environment"
+     bletch = barf, gag, etc.
+     endif
+     endif

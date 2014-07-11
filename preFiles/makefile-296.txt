@@ -1,0 +1,2 @@
+     foo.1 : foo.man sedscript
+             sed -f sedscript foo.man > foo.1

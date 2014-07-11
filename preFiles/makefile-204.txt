@@ -1,0 +1,3 @@
+          sources := foo.c bar.c baz.s ugh.h
+          foo: $(sources)
+                  cc $(filter %.c %.s,$(sources)) -o foo

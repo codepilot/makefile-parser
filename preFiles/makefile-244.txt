@@ -1,0 +1,5 @@
+     sources = foo.c bar.c
+     
+     ifneq ($(MAKECMDGOALS),clean)
+     include $(sources:.c=.d)
+     endif

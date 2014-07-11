@@ -1,0 +1,2 @@
+          $(findstring a,a b c)
+          $(findstring a,b c)

@@ -1,0 +1,5 @@
+     define frobnicate =
+     @echo "frobnicating target $@"
+     frob-step-1 $< -o $@-step-1
+     frob-step-2 $@-step-1 -o $@
+     endef

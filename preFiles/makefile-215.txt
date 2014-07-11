@@ -1,0 +1,1 @@
+          $(notdir src/foo.c hacks)

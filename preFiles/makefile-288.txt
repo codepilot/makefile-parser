@@ -1,0 +1,7 @@
+     all:
+             @echo Temporary file: $(mk-temp tmpfile.)
+     
+     load mk_temp.so
+     
+     mk_temp.so: mk_temp.c
+             $(CC) -shared -fPIC -o $ $<

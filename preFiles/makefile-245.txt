@@ -1,0 +1,2 @@
+     .PHONY: all
+     all: size nm ld ar as

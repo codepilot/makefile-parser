@@ -1,0 +1,3 @@
+     CFLAGS = $(includes) -O
+     ...
+     CFLAGS += -pg # enable profiling

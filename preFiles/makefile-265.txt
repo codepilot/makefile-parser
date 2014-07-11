@@ -1,0 +1,2 @@
+     %.o: %.c foo.h
+             $(CC) -c $(CFLAGS) $(CPPFLAGS) -o $@ $<

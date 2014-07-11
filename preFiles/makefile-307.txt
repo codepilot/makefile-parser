@@ -1,0 +1,2 @@
+     $(INSTALL_PROGRAM) foo $(DESTDIR)$(bindir)/foo
+     $(INSTALL_DATA) libfoo.a $(DESTDIR)$(libdir)/libfoo.a

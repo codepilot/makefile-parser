@@ -1,0 +1,2 @@
+     $(AR) $(BISON) $(CC) $(FLEX) $(INSTALL) $(LD) $(LDCONFIG) $(LEX)
+     $(MAKE) $(MAKEINFO) $(RANLIB) $(TEXI2DVI) $(YACC)

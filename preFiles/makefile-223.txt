@@ -1,0 +1,3 @@
+     find_files = $(wildcard $(dir)/*)
+     dirs := a b c d
+     files := $(foreach dir,$(dirs),$(find_files))

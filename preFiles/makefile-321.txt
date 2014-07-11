@@ -1,0 +1,5 @@
+     [ basename bash cat chgrp chmod chown cmp cp dd diff echo
+     egrep expand expr false fgrep find getopt grep gunzip gzip
+     hostname install install-info kill ldconfig ln ls md5sum
+     mkdir mkfifo mknod mv printenv pwd rm rmdir sed sort tee
+     test touch true uname xargs yes

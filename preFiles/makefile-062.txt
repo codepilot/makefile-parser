@@ -1,0 +1,3 @@
+          .LOW_RESOLUTION_TIME: dst
+          dst: src
+                  cp -p src dst

@@ -1,0 +1,2 @@
+     foo.o : bar.c
+             $(CC) -I. -I$(srcdir) $(CFLAGS) -c bar.c -o foo.o

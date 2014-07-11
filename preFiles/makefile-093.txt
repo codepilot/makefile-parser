@@ -1,0 +1,7 @@
+     .ONESHELL:
+     SHELL = /usr/bin/perl
+     .SHELLFLAGS = -e
+     show :
+             # Make sure "@" is not the first character on the first line
+             @f = qw(a b c);
+             print "@f\n";

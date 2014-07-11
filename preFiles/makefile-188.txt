@@ -1,0 +1,6 @@
+          foo =
+          ifdef foo
+          frobozz = yes
+          else
+          frobozz = no
+          endif

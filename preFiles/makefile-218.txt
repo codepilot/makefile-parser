@@ -1,0 +1,1 @@
+          $(addsuffix .c,foo bar)

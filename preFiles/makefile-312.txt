@@ -1,0 +1,3 @@
+          install-strip:
+                  $(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' \
+                          install

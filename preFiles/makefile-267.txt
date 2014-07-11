@@ -1,0 +1,2 @@
+     .SUFFIXES:            # Delete the default suffixes
+     .SUFFIXES: .c .o .h   # Define our suffix list

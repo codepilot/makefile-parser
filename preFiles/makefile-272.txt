@@ -1,0 +1,3 @@
+     cc -c bar.c -o bar.o
+     ar r foo.a bar.o
+     rm -f bar.o

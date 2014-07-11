@@ -1,0 +1,2 @@
+          name1 = Makefile
+          name2 = inc.mk

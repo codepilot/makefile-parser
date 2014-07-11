@@ -1,0 +1,4 @@
+          info: foo.info
+          
+          foo.info: foo.texi chap1.texi chap2.texi
+                  $(MAKEINFO) $(srcdir)/foo.texi

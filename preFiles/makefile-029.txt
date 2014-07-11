@@ -1,0 +1,2 @@
+     foo.o : foo.c defs.h       # module for twiddling the frobs
+             cc -c -g foo.c

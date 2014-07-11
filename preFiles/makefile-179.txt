@@ -1,0 +1,2 @@
+     foo: $(objects)
+             $(CC) -o foo $(objects) $(libs_for_gcc)

@@ -1,0 +1,2 @@
+     lib: foo.o bar.o lose.o win.o
+             ar r lib $?

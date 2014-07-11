@@ -1,0 +1,2 @@
+     ar bison cc flex install ld ldconfig lex
+     make makeinfo ranlib texi2dvi yacc

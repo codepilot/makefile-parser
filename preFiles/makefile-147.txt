@@ -1,0 +1,2 @@
+     hash := $(shell printf '\043')
+     var := $(shell find . -name "*.c")

@@ -1,0 +1,5 @@
+     ifeq (0,${MAKELEVEL})
+     whoami    := $(shell whoami)
+     host-type := $(shell arch)
+     MAKE := ${MAKE} host-type=${host-type} whoami=${whoami}
+     endif

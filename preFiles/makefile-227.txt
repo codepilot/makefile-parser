@@ -1,0 +1,4 @@
+     program: $(OBJECTS)
+             $(file >$@.in,) $(foreach O,$^,$(file >>$@.in,$O))
+             $(CMD) $(CMDFLAGS) @$@.in
+             @rm $@.in

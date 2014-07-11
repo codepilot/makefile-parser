@@ -1,0 +1,7 @@
+     .SECONDEXPANSION:
+     
+     foo: bar
+     
+     foo foz: fo%: bo%
+     
+     %oo: $$< $$^ $$+ $$*

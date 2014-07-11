@@ -1,0 +1,2 @@
+     $(INSTALL_PROGRAM) foo $(bindir)/foo
+     $(INSTALL_DATA) libfoo.a $(libdir)/libfoo.a

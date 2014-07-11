@@ -1,0 +1,3 @@
+             $(PRE_UNINSTALL)     # Pre-uninstall commands follow.
+             $(POST_UNINSTALL)    # Post-uninstall commands follow.
+             $(NORMAL_UNINSTALL)  # Normal commands follow.

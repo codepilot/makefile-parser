@@ -1,0 +1,2 @@
+     foo : bar/lose
+             cd $(@D) && gobble $(@F) > ../$@

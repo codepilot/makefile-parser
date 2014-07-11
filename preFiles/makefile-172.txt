@@ -1,0 +1,4 @@
+     EXTRA_CFLAGS =
+     
+     prog: private EXTRA_CFLAGS = -L/usr/local/lib
+     prog: a.o b.o

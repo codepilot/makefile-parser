@@ -1,0 +1,2 @@
+     vpath %.c foo:bar
+     vpath %   blish

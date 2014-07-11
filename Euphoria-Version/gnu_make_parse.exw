@@ -1,0 +1,87 @@
+include emeta.e
+
+constant cached_file_name = "gnu_make.cache"
+constant uncached_file_name = "gnu_make.e"
+constant cached_file_info = dir(cached_file_name)
+constant uncached_file_info = dir(uncached_file_name)
+
+if not atom(cached_file_info) and compare(cached_file_info[1][D_YEAR..D_SECOND], uncached_file_info[1][D_YEAR..D_SECOND]) >= 0 then --if no changes then
+	puts(1, "using " & cached_file_name & "\n")
+	cached_named_ps(cached_file_name, {uncached_file_name})
+else
+	puts(1, "creating " & cached_file_name & " from " & uncached_file_name & "\n")
+	named_p(uncached_file_name)
+	serial_file(cached_file_name,{parsers,named_parsers})
+end if
+
+constant constTestPattern = "./../preFiles/makefile-%03d.txt"
+constant constResultPattern = "./../preFiles_results/makefile_%03d.seu"
+constant constStandardPattern = "./../preFiles_standards/makefile_%03d.seu"
+
+procedure test_make_parse(atom testNumber)
+sequence testPath, resultPath, standardPath
+object ret, result
+	testPath = sprintf(constTestPattern, testNumber)
+	resultPath = sprintf(constResultPattern, testNumber)
+	standardPath = sprintf(constStandardPattern, testNumber)
+--puts(1,"test_make_parse("&testPath&", "&resultPath&", "&standardPath&")\n")
+	printf(1,"test_make_parse(%03d) ", testNumber)
+	--puts(1,"parse start\n")
+	ret = exec("gnu_make_main", testPath, 0)
+	--puts(1,"parse end\n")
+	if length(ret) < 2 then
+		puts(1, "bad parse ")
+		? ret
+		puts(1, "\n")
+		return
+	end if
+	if atom(ret[2]) or length(ret[2]) = 0 then
+		puts(1, "empty parse ")
+		puts(1, "\n")
+		return
+	end if
+	result = ret[2]
+	serial_file(resultPath, result)
+	if equal(
+		read_whole_file(resultPath),
+		read_whole_file(standardPath)) then
+		puts(1, "File are equal\n")
+		--pretty_print(1, result, {3})
+		--puts(1, "\n")
+	else
+		puts(1, "File are not equal\n")
+		pretty_print(1, result, {3})
+		puts(1, "\n")
+	end if
+end procedure
+
+constant test_list={4,8,9,10,11,12,13,14,15,19,20,21,22,23,24,25,26,27,28,29,30}
+
+for i = 1 to length(test_list) do
+	--test_make_parse(test_list[i])
+end for
+
+for i = 0 to 327 do
+	test_make_parse(i)
+end for
+
+-- test_make_parse(0)
+-- test_make_parse(1)
+
+-- ret = exec("gnu_make_main","C:/node-projects/gnu-make/preFiles/makefile-004.txt", 0)
+-- constant result0004 = ret[2]
+-- 
+-- 
+-- if equal(
+-- 	read_whole_file("./grammar_gnu_make_results/gnu_make_test_0000.seu"),
+-- 	read_whole_file("./grammar_gnu_make_standards/gnu_make_test_0000.seu")) then
+-- 	puts(1, "File are equal\n")
+-- --pretty_print(1, result0000, {3})
+-- else
+-- 	puts(1, "File are not equal\n")
+-- 	pretty_print(1, result0000, {3})
+-- end if
+
+
+puts(1,"Press any key to quit\n")
+if wait_key() then end if

@@ -1,0 +1,1 @@
+     files := $(wildcard a/* b/* c/* d/*)

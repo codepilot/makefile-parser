@@ -1,0 +1,6 @@
+          .PHONY: all
+          ifneq   "$(needs_made)" ""
+          all: $(needs_made)
+          else
+          all:;@echo 'Nothing to make!'
+          endif

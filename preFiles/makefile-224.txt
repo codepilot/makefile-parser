@@ -1,0 +1,1 @@
+     files := $(foreach Esta-escrito-en-espanol!,b c ch,$(find_files))

@@ -1,0 +1,3 @@
+     x := foo
+     y := $(x) bar
+     x := later

@@ -1,0 +1,1 @@
+     foolib(hack.o kludge.o)

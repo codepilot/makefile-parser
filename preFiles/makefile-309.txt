@@ -1,0 +1,2 @@
+          lispdir='${datarootdir}/emacs/site-lisp'
+          AC_SUBST(lispdir)

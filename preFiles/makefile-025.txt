@@ -1,0 +1,5 @@
+     main_SRCS := main.c try.c test.c
+     lib_SRCS := lib.c api.c
+     
+     .SECONDEXPANSION:
+     main lib: $$(patsubst %.c,%.o,$$($$@_SRCS))

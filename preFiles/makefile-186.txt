@@ -1,0 +1,5 @@
+          bar = true
+          foo = bar
+          ifdef $(foo)
+          frobozz = yes
+          endif

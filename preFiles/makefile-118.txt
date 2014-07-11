@@ -1,0 +1,2 @@
+     frob.out: frob.in
+             @$(frobnicate)

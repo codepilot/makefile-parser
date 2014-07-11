@@ -1,0 +1,2 @@
+     clean:
+             rm edit $(objects)

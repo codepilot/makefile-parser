@@ -1,0 +1,6 @@
+C:\Users\Administrator\Documents\GitHub\makefile-parser\Javascript-Version\seu.coffee:1
+fs has not been declared
+fs = require 'fs'
+ ^
+
+

@@ -1,0 +1,7 @@
+     conditional-directive-one
+     text-if-one-is-true
+     else conditional-directive-two
+     text-if-two-is-true
+     else
+     text-if-one-and-two-are-false
+     endif

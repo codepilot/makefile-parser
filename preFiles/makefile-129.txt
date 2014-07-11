@@ -1,0 +1,2 @@
+     nullstring :=
+     space := $(nullstring) # end of the line

@@ -1,0 +1,4 @@
+          html: foo.html
+          
+          foo.html: foo.texi chap1.texi chap2.texi
+                  $(TEXI2HTML) $(srcdir)/foo.texi

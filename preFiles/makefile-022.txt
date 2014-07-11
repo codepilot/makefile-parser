@@ -1,0 +1,4 @@
+     .SECONDEXPANSION:
+     ONEVAR = onefile
+     TWOVAR = twofile
+     myfile: $(ONEVAR) $$(TWOVAR)

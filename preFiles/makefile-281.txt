@@ -1,0 +1,5 @@
+     prog: $(PREREQS)
+             @$(guile (mkopen "tmp.out" "w")) \
+              $(foreach X,$^,$(guile (mkwrite "$(X)"))) \
+              $(guile (mkclose))
+             $(LINK) < tmp.out

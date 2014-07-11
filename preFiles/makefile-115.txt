@@ -1,0 +1,4 @@
+     define run-yacc =
+     yacc $(firstword $^)
+     mv y.tab.c $@
+     endef

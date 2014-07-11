@@ -1,0 +1,4 @@
+     override define two-lines =
+     foo
+     $(bar)
+     endef

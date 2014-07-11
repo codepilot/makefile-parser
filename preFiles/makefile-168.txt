@@ -1,0 +1,2 @@
+     prog : CFLAGS = -g
+     prog : prog.o foo.o bar.o

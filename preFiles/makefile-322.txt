@@ -1,0 +1,5 @@
+     make -s -n install -o all \
+           PRE_INSTALL=pre-install \
+           POST_INSTALL=post-install \
+           NORMAL_INSTALL=normal-install \
+       | gawk -f pre-install.awk

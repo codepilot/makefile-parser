@@ -1,0 +1,3 @@
+     pathsearch = $(firstword $(wildcard $(addsuffix /$(1),$(subst :, ,$(PATH)))))
+     
+     LS := $(call pathsearch,ls)

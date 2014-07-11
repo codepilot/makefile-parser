@@ -1,0 +1,6 @@
+     .ONESHELL:
+     SHELL = /usr/bin/perl
+     .SHELLFLAGS = -e
+     show :
+             @f = qw(a b c);
+             print "@f\n";

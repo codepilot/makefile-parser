@@ -1,0 +1,3 @@
+          ifeq ($(strip $(foo)),)
+          text-if-empty
+          endif

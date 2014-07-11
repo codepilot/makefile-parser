@@ -1,0 +1,3 @@
+     ifneq "$(findstring environment,$(origin bletch))" ""
+     bletch = barf, gag, etc.
+     endif

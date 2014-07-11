@@ -1,0 +1,2 @@
+     foo.c : foo.y
+             $(run-yacc)

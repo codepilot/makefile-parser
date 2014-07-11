@@ -1,0 +1,4 @@
+          dvi: foo.dvi
+          
+          foo.dvi: foo.texi chap1.texi chap2.texi
+                  $(TEXI2DVI) $(srcdir)/foo.texi

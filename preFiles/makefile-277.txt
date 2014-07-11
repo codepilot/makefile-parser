@@ -1,0 +1,4 @@
+     (%.o): %.c
+             $(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $*.o
+             $(AR) r $@ $*.o
+             $(RM) $*.o

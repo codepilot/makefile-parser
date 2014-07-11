@@ -1,0 +1,5 @@
+     dir = foo
+     $(dir)_sources := $(wildcard $(dir)/*.c)
+     define $(dir)_print =
+     lpr $($(dir)_sources)
+     endef
