@@ -27,21 +27,40 @@ gnu_make {
 
 
 
+  ws              = ' '
+                  | '\t'
+                  | '\n'
+                  | '\r\n'
+  wss             = <ws>* $({})
 
   white_space     = '\\' <eol>                                                                                      $({})
                   | ' '                                                                                             $({})
   white_space_eol = <white_space>* <eol>                                                                            $({})
   alphanumeric    = [a-zA-Z0-9]
-  file_symbol     = '.' | '-'
+  file_symbol     = '.' | '-' | '*'
   file_symbols    = <alphanumeric> | <file_symbol>
+  var_ref         = <white_space>* '$(' <alphanumerics>:v ')' <white_space>*                                        $({"var_ref", v})
   filename        = <white_space>*:a <file_symbols>+:f <white_space>*:b                                             $(f)
+                  | <var_ref>
+  filename_or_any = <filename>:f $(f)
+                  | '%'          $({"any", "%"})
+  filename_or_pipe= <filename>:f $(f)
+                  | '>'          $({"redir", ">"})
   filenames       = <filename>+
+  forps           = <filename_or_pipe>+
   eol             = '\n'                                                                                            $({})
                   | '\r\n'                                                                                          $({})
-  make_tree_start = <filename>:f ':'                                                                                $(f)
-  make_tree       = <filename>:f ':' <filenames>:s <eol> <white_space>*:a <filenames>:b  <white_space_eol>+         $({"rule", f, s, b})
-                  | <filename>:f ':'               <eol> <white_space>*:a <filenames>:b  <white_space_eol>+         $({"rule", f, {}, b})
-  gnu_make_main   = <make_tree>*:m                                                                                  $(m)
+  make_tree       = <wss> <filename_or_any>:f ':' <filenames>:s <eol> <white_space>*:a <forps>:b  <white_space_eol>+         $({"rule", f, s, b})
+                  | <wss> <filename_or_any>:f ':'               <eol> <white_space>*:a <forps>:b  <white_space_eol>+         $({"rule", f, {}, b})
+                  | <wss> <filenames>:f ':' <filenames>:s <eol>                                                           $({"implicit_rule", f, s})
+                  
+  alphanumerics   = <alphanumeric>+
+  var_file_list   = <white_space>* <alphanumerics>:v <white_space>* '=' <filenames>:l                               $({"var", v, l})
+  mt_or_var       = <make_tree>:m                                                                                   $(m)
+                  | <var_file_list>:v                                                                               $(v)
+                  | ' '* 'include' <filenames>:f                                                                    $({"include", f})
+--gnu_make_main   = <make_tree>*:m                                                                                  $(m)
+  gnu_make_main   = <mt_or_var>*:m                                                                                  $(m)
 
   num   = [0-9]+
 

@@ -1,0 +1,1448 @@
+{
+  "white_space": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "char",
+            "arg1": "\\"
+          },
+          {
+            "step": "producer",
+            "arg1": "eol"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": []
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": " "
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": []
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "white_space_eol": [
+    {
+      "step": "*",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "white_space"
+        }
+      ]
+    },
+    {
+      "step": "producer",
+      "arg1": "eol"
+    },
+    {
+      "step": "host2",
+      "arg1": [
+        {
+          "step": "return",
+          "arg1": {
+            "step": "seq",
+            "arg1": []
+          }
+        }
+      ]
+    }
+  ],
+  "alphanumeric": [
+    {
+      "step": "ranges",
+      "arg1": [
+        "az",
+        "AZ",
+        "09"
+      ]
+    }
+  ],
+  "file_symbol": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "char",
+            "arg1": "."
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "-"
+          }
+        ]
+      ]
+    }
+  ],
+  "file_symbols": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "alphanumeric"
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "file_symbol"
+          }
+        ]
+      ]
+    }
+  ],
+  "filename": [
+    {
+      "step": "*",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "white_space"
+        }
+      ],
+      "name": "a"
+    },
+    {
+      "step": "+",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "file_symbols"
+        }
+      ],
+      "name": "f"
+    },
+    {
+      "step": "*",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "white_space"
+        }
+      ],
+      "name": "b"
+    },
+    {
+      "step": "host2",
+      "arg1": [
+        {
+          "step": "return",
+          "arg1": {
+            "step": "subs",
+            "arg1": [
+              [
+                "id",
+                "f"
+              ],
+              []
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "filenames": [
+    {
+      "step": "+",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "filename"
+        }
+      ]
+    }
+  ],
+  "eol": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "char",
+            "arg1": "\n"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": []
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "\r\n"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": []
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "make_tree_start": [
+    {
+      "step": "producer",
+      "arg1": "filename",
+      "name": "f"
+    },
+    {
+      "step": "char",
+      "arg1": ":"
+    },
+    {
+      "step": "host2",
+      "arg1": [
+        {
+          "step": "return",
+          "arg1": {
+            "step": "subs",
+            "arg1": [
+              [
+                "id",
+                "f"
+              ],
+              []
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "make_tree": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "filename",
+            "name": "f"
+          },
+          {
+            "step": "char",
+            "arg1": ":"
+          },
+          {
+            "step": "producer",
+            "arg1": "filenames",
+            "name": "s"
+          },
+          {
+            "step": "producer",
+            "arg1": "eol"
+          },
+          {
+            "step": "*",
+            "arg1": [
+              {
+                "step": "producer",
+                "arg1": "white_space"
+              }
+            ],
+            "name": "a"
+          },
+          {
+            "step": "producer",
+            "arg1": "filenames",
+            "name": "b"
+          },
+          {
+            "step": "+",
+            "arg1": [
+              {
+                "step": "producer",
+                "arg1": "white_space_eol"
+              }
+            ]
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "lit",
+                      "arg1": "rule"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "f"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "s"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "filename",
+            "name": "f"
+          },
+          {
+            "step": "char",
+            "arg1": ":"
+          },
+          {
+            "step": "producer",
+            "arg1": "eol"
+          },
+          {
+            "step": "*",
+            "arg1": [
+              {
+                "step": "producer",
+                "arg1": "white_space"
+              }
+            ],
+            "name": "a"
+          },
+          {
+            "step": "producer",
+            "arg1": "filenames",
+            "name": "b"
+          },
+          {
+            "step": "+",
+            "arg1": [
+              {
+                "step": "producer",
+                "arg1": "white_space_eol"
+              }
+            ]
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "lit",
+                      "arg1": "rule"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "f"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "seq",
+                      "arg1": []
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "gnu_make_main": [
+    {
+      "step": "*",
+      "arg1": [
+        {
+          "step": "producer",
+          "arg1": "make_tree"
+        }
+      ],
+      "name": "m"
+    },
+    {
+      "step": "host2",
+      "arg1": [
+        {
+          "step": "return",
+          "arg1": {
+            "step": "subs",
+            "arg1": [
+              [
+                "id",
+                "m"
+              ],
+              []
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "num": [
+    {
+      "step": "+",
+      "arg1": [
+        {
+          "step": "ranges",
+          "arg1": [
+            "09"
+          ]
+        }
+      ]
+    }
+  ],
+  "exprA": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "exprA",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "-"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "-"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "num"
+          }
+        ]
+      ]
+    }
+  ],
+  "exprB": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "num"
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "exprB",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "-"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "-"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "exprC": [
+    {
+      "step": "producer",
+      "arg1": "num",
+      "name": "a"
+    },
+    {
+      "step": "*",
+      "arg1": [
+        {
+          "step": "dofirst",
+          "arg1": [
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "num"
+            }
+          ]
+        }
+      ],
+      "name": "b"
+    },
+    {
+      "step": "host2",
+      "arg1": [
+        {
+          "step": "return",
+          "arg1": {
+            "step": "seq",
+            "arg1": [
+              {
+                "step": "subs",
+                "arg1": [
+                  [
+                    "id",
+                    "a"
+                  ],
+                  []
+                ]
+              },
+              {
+                "step": "lit",
+                "arg1": "-"
+              },
+              {
+                "step": "subs",
+                "arg1": [
+                  [
+                    "id",
+                    "b"
+                  ],
+                  []
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "xD": [
+    {
+      "step": "producer",
+      "arg1": "exprD"
+    }
+  ],
+  "exprD": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "xD",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "-"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "-"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "num"
+          }
+        ]
+      ]
+    }
+  ],
+  "exprE": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "+"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "+"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "-"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "-"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "term": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "term",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "+"
+          },
+          {
+            "step": "producer",
+            "arg1": "fact",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "+"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "term",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "-"
+          },
+          {
+            "step": "producer",
+            "arg1": "fact",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "-"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "fact"
+          }
+        ]
+      ]
+    }
+  ],
+  "fact": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "fact",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "*"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "*"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "fact",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "/"
+          },
+          {
+            "step": "producer",
+            "arg1": "num",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "lit",
+                      "arg1": "/"
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "producer",
+            "arg1": "num"
+          }
+        ]
+      ]
+    }
+  ],
+  "start": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "ones",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "2",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "1",
+            "name": "a"
+          },
+          {
+            "step": "producer",
+            "arg1": "start",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "!",
+            "arg1": [
+              {
+                "step": "ranges",
+                "arg1": [
+                  [
+                    0,
+                    255
+                  ]
+                ]
+              }
+            ]
+          }
+        ]
+      ]
+    }
+  ],
+  "ones": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "ones",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "1",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "rr": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "char",
+            "arg1": "1",
+            "name": "a"
+          },
+          {
+            "step": "producer",
+            "arg1": "rr",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "lr": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "lr",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "1",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "lr1": [
+    {
+      "step": "choices",
+      "arg1": [
+        [
+          {
+            "step": "producer",
+            "arg1": "x",
+            "name": "a"
+          },
+          {
+            "step": "char",
+            "arg1": "1",
+            "name": "b"
+          },
+          {
+            "step": "host2",
+            "arg1": [
+              {
+                "step": "return",
+                "arg1": {
+                  "step": "seq",
+                  "arg1": [
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    },
+                    {
+                      "step": "subs",
+                      "arg1": [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "step": "char",
+            "arg1": "1"
+          }
+        ]
+      ]
+    }
+  ],
+  "x": [
+    {
+      "step": "producer",
+      "arg1": "lr1"
+    }
+  ],
+  "gnu_make": []
+}

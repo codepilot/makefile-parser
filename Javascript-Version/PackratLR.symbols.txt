@@ -1,0 +1,85 @@
+MEMO : (RULE,POS) -> MEMOENTRY
+MEMOENTRY : (ans : AST or LR,pos : POSITION)
+LR : (seed : AST,rule : RULE,head : HEAD,next : LR)
+
+HEADS : POSITION -> HEAD #HEADS is NIL at any position where left recursion growth is not underway.
+HEAD : (rule : RULE,involvedSet,evalSet : SET of RULE)
+
+
+RECALL(R,P)
+	let m = MEMO(R,P)
+	let h = HEADS(P)
+	# If not growing a seed parse, just return what is stored
+	# in the memo table.
+	if h = NIL
+		then return m
+	# Do not evaluate any rule that is not involved in this
+	# left recursion.
+	if m = NIL and R NOT_ELEMENT_OF {h.head} UNION h.involvedSet
+	then return new MEMOENTRY(FAIL,P)
+	# Allow involved rules to be evaluated, but only once,
+	# during a seed-growing iteration.
+	if R ELEMENT_OF h.evalSet
+		then h.evalSet <- h.evalSet RELATIVE_COMPLEMENT {R}
+			let ans = EVAL(R.body)
+			m.ans <- ans
+			m.pos <- Pos
+	return m
+
+LR-ANSWER(R,P,M)
+	let h = M.ans.head
+	if h.rule isnt R
+		then return M.ans.seed
+		else M.ans <- M.ans.seed
+			if M.ans = FAIL
+				then return FAIL
+				else return GROW-LR(R,P,M,h)
+
+SETUP-LR(R,L)
+	if L.head = NIL
+		then L.head <- new HEAD(R,{},{})
+	let s = LRStack
+	while s.head isnt L.head
+		do s.head <- L.head
+		L.head.involvedSet <- L.head.involvedSet UNION {s.rule}
+		s <- s.next
+
+APPLY-RULE(R,P)
+	let m = RECALL(R,P)
+	if m = NIL
+		then # Create a new LR and push it onto the rule
+			   # invocation stack.
+			let lr = new LR(FAIL,R,NIL,LRStack)
+			LRStack <- lr
+			# Memoize lr, then evaluate R.
+			m <- new MEMOENTRY(lr,P)
+			MEMO(R,P) <- m
+			let ans = EVAL(R.body)
+			# Pop lr off the rule invocation stack.
+			LRStack <- LRStack.next
+			m.pos <- Pos
+			if lr.head isnt NIL
+				then lr.seed <- ans
+					return LR-ANSWER(R,P,m)
+				else m.ans <- ans
+					return ans
+		else Pos <- m.pos
+			if m.ans is LR
+				then SETUP-LR(R,m.ans)
+					return m.ans.seed
+				else return m.ans
+
+GROW-LR(R,P,M,H)
+	HEADS(P) <- H#line A
+	while TRUE
+		do
+			Pos <- P
+			H.evalSet <- COPY(H.involvedSet)#line B
+			let ans = EVAL(R.body)
+			if ans = FAIL or Pos = M.pos
+				then break
+			M.ans <- ans
+			M.pos <- Pos
+			HEADS(P) <- NIL#line C
+	Pos <- M.pos
+	return M.ans

@@ -1,0 +1,4105 @@
+{
+  "ws": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "char",
+              "arg1": " "
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "\t"
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "\n"
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "\r\n"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "wss": {
+    "body": [
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "ws"
+          }
+        ]
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "seq",
+              "arg1": []
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "white_space": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "char",
+              "arg1": "\\"
+            },
+            {
+              "step": "producer",
+              "arg1": "eol"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": []
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": " "
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": []
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "white_space_eol": {
+    "body": [
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "white_space"
+          }
+        ]
+      },
+      {
+        "step": "producer",
+        "arg1": "eol"
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "seq",
+              "arg1": []
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "alphanumeric": {
+    "body": [
+      {
+        "step": "ranges",
+        "arg1": [
+          "az",
+          "AZ",
+          "09"
+        ]
+      }
+    ],
+    "args": []
+  },
+  "file_symbol": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "char",
+              "arg1": "."
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "-"
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "*"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "file_symbols": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "alphanumeric"
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "file_symbol"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "var_ref": {
+    "body": [
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "white_space"
+          }
+        ]
+      },
+      {
+        "step": "char",
+        "arg1": "$("
+      },
+      {
+        "step": "producer",
+        "arg1": "alphanumerics",
+        "name": "v"
+      },
+      {
+        "step": "char",
+        "arg1": ")"
+      },
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "white_space"
+          }
+        ]
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "seq",
+              "arg1": [
+                {
+                  "step": "lit",
+                  "arg1": "var_ref"
+                },
+                {
+                  "step": "subs",
+                  "arg1": [
+                    [
+                      "id",
+                      "v"
+                    ],
+                    []
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "filename": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "*",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space"
+                }
+              ],
+              "name": "a"
+            },
+            {
+              "step": "+",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "file_symbols"
+                }
+              ],
+              "name": "f"
+            },
+            {
+              "step": "*",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space"
+                }
+              ],
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "subs",
+                    "arg1": [
+                      [
+                        "id",
+                        "f"
+                      ],
+                      []
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "var_ref"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "filename_or_any": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "filename",
+              "name": "f"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "subs",
+                    "arg1": [
+                      [
+                        "id",
+                        "f"
+                      ],
+                      []
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "%"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "any"
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "%"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "filename_or_pipe": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "filename",
+              "name": "f"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "subs",
+                    "arg1": [
+                      [
+                        "id",
+                        "f"
+                      ],
+                      []
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": ">"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "redir"
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": ">"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "filenames": {
+    "body": [
+      {
+        "step": "+",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "filename"
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "forps": {
+    "body": [
+      {
+        "step": "+",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "filename_or_pipe"
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "eol": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "char",
+              "arg1": "\n"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": []
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "\r\n"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": []
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "make_tree": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "wss"
+            },
+            {
+              "step": "producer",
+              "arg1": "filename_or_any",
+              "name": "f"
+            },
+            {
+              "step": "char",
+              "arg1": ":"
+            },
+            {
+              "step": "producer",
+              "arg1": "filenames",
+              "name": "s"
+            },
+            {
+              "step": "producer",
+              "arg1": "eol"
+            },
+            {
+              "step": "*",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space"
+                }
+              ],
+              "name": "a"
+            },
+            {
+              "step": "producer",
+              "arg1": "forps",
+              "name": "b"
+            },
+            {
+              "step": "+",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space_eol"
+                }
+              ]
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "rule"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "s"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "wss"
+            },
+            {
+              "step": "producer",
+              "arg1": "filename_or_any",
+              "name": "f"
+            },
+            {
+              "step": "char",
+              "arg1": ":"
+            },
+            {
+              "step": "producer",
+              "arg1": "eol"
+            },
+            {
+              "step": "*",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space"
+                }
+              ],
+              "name": "a"
+            },
+            {
+              "step": "producer",
+              "arg1": "forps",
+              "name": "b"
+            },
+            {
+              "step": "+",
+              "arg1": [
+                {
+                  "step": "producer",
+                  "arg1": "white_space_eol"
+                }
+              ]
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "rule"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "seq",
+                        "arg1": []
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "wss"
+            },
+            {
+              "step": "producer",
+              "arg1": "filenames",
+              "name": "f"
+            },
+            {
+              "step": "char",
+              "arg1": ":"
+            },
+            {
+              "step": "producer",
+              "arg1": "filenames",
+              "name": "s"
+            },
+            {
+              "step": "producer",
+              "arg1": "eol"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "implicit_rule"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "s"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "alphanumerics": {
+    "body": [
+      {
+        "step": "+",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "alphanumeric"
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "var_file_list": {
+    "body": [
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "white_space"
+          }
+        ]
+      },
+      {
+        "step": "producer",
+        "arg1": "alphanumerics",
+        "name": "v"
+      },
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "white_space"
+          }
+        ]
+      },
+      {
+        "step": "char",
+        "arg1": "="
+      },
+      {
+        "step": "producer",
+        "arg1": "filenames",
+        "name": "l"
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "seq",
+              "arg1": [
+                {
+                  "step": "lit",
+                  "arg1": "var"
+                },
+                {
+                  "step": "subs",
+                  "arg1": [
+                    [
+                      "id",
+                      "v"
+                    ],
+                    []
+                  ]
+                },
+                {
+                  "step": "subs",
+                  "arg1": [
+                    [
+                      "id",
+                      "l"
+                    ],
+                    []
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "mt_or_var": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "make_tree",
+              "name": "m"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "subs",
+                    "arg1": [
+                      [
+                        "id",
+                        "m"
+                      ],
+                      []
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "var_file_list",
+              "name": "v"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "subs",
+                    "arg1": [
+                      [
+                        "id",
+                        "v"
+                      ],
+                      []
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "*",
+              "arg1": [
+                {
+                  "step": "char",
+                  "arg1": " "
+                }
+              ]
+            },
+            {
+              "step": "char",
+              "arg1": "include"
+            },
+            {
+              "step": "producer",
+              "arg1": "filenames",
+              "name": "f"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "lit",
+                        "arg1": "include"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "gnu_make_main": {
+    "body": [
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "producer",
+            "arg1": "mt_or_var"
+          }
+        ],
+        "name": "m"
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "subs",
+              "arg1": [
+                [
+                  "id",
+                  "m"
+                ],
+                []
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "num": {
+    "body": [
+      {
+        "step": "+",
+        "arg1": [
+          {
+            "step": "ranges",
+            "arg1": [
+              "09"
+            ]
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "exprA": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "exprA",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "-"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "num"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "exprB": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "num"
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "exprB",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "-"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "exprC": {
+    "body": [
+      {
+        "step": "producer",
+        "arg1": "num",
+        "name": "a"
+      },
+      {
+        "step": "*",
+        "arg1": [
+          {
+            "step": "dofirst",
+            "arg1": [
+              {
+                "step": "char",
+                "arg1": "-"
+              },
+              {
+                "step": "producer",
+                "arg1": "num"
+              }
+            ]
+          }
+        ],
+        "name": "b"
+      },
+      {
+        "step": "host2",
+        "arg1": [
+          {
+            "step": "return",
+            "arg1": {
+              "step": "seq",
+              "arg1": [
+                {
+                  "step": "subs",
+                  "arg1": [
+                    [
+                      "id",
+                      "a"
+                    ],
+                    []
+                  ]
+                },
+                {
+                  "step": "lit",
+                  "arg1": "-"
+                },
+                {
+                  "step": "subs",
+                  "arg1": [
+                    [
+                      "id",
+                      "b"
+                    ],
+                    []
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "args": []
+  },
+  "xD": {
+    "body": [
+      {
+        "step": "producer",
+        "arg1": "exprD"
+      }
+    ],
+    "args": []
+  },
+  "exprD": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "xD",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "-"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "num"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "exprE": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "+"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "+"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "-"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "term": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "term",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "+"
+            },
+            {
+              "step": "producer",
+              "arg1": "fact",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "+"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "term",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "-"
+            },
+            {
+              "step": "producer",
+              "arg1": "fact",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "-"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "fact"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "fact": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "fact",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "*"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "*"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "fact",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "/"
+            },
+            {
+              "step": "producer",
+              "arg1": "num",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "lit",
+                        "arg1": "/"
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "producer",
+              "arg1": "num"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "start": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "ones",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "2",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "1",
+              "name": "a"
+            },
+            {
+              "step": "producer",
+              "arg1": "start",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "!",
+              "arg1": [
+                {
+                  "step": "ranges",
+                  "arg1": [
+                    "\u0000ÿ"
+                  ]
+                }
+              ]
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "ones": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "ones",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "1",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "1"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "rr": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "char",
+              "arg1": "1",
+              "name": "a"
+            },
+            {
+              "step": "producer",
+              "arg1": "rr",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "1"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "lr": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "lr",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "1",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "1"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "lr1": {
+    "body": [
+      {
+        "step": "choices",
+        "arg1": [
+          [
+            {
+              "step": "producer",
+              "arg1": "x",
+              "name": "a"
+            },
+            {
+              "step": "char",
+              "arg1": "1",
+              "name": "b"
+            },
+            {
+              "step": "host2",
+              "arg1": [
+                {
+                  "step": "return",
+                  "arg1": {
+                    "step": "seq",
+                    "arg1": [
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "a"
+                          ],
+                          []
+                        ]
+                      },
+                      {
+                        "step": "subs",
+                        "arg1": [
+                          [
+                            "id",
+                            "b"
+                          ],
+                          []
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          [
+            {
+              "step": "char",
+              "arg1": "1"
+            }
+          ]
+        ]
+      }
+    ],
+    "args": []
+  },
+  "x": {
+    "body": [
+      {
+        "step": "producer",
+        "arg1": "lr1"
+      }
+    ],
+    "args": []
+  },
+  "gnu_make": {
+    "body": [],
+    "args": [
+      [
+        "ws",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "char",
+                  " "
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "\t"
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "\n"
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "\r\n"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "wss",
+        [
+          [
+            "*",
+            [
+              [
+                "producer",
+                "ws"
+              ]
+            ]
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "white_space",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "char",
+                  "\\"
+                ],
+                [
+                  "producer",
+                  "eol"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  " "
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "white_space_eol",
+        [
+          [
+            "*",
+            [
+              [
+                "producer",
+                "white_space"
+              ]
+            ]
+          ],
+          [
+            "producer",
+            "eol"
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "seq",
+                  []
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "alphanumeric",
+        [
+          [
+            "ranges",
+            [
+              "az",
+              "AZ",
+              "09"
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "file_symbol",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "char",
+                  "."
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "-"
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "*"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "file_symbols",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "alphanumeric"
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "file_symbol"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "var_ref",
+        [
+          [
+            "*",
+            [
+              [
+                "producer",
+                "white_space"
+              ]
+            ]
+          ],
+          [
+            "char",
+            "$("
+          ],
+          [
+            "producer",
+            "alphanumerics",
+            "v"
+          ],
+          [
+            "char",
+            ")"
+          ],
+          [
+            "*",
+            [
+              [
+                "producer",
+                "white_space"
+              ]
+            ]
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "seq",
+                  [
+                    [
+                      "lit",
+                      "var_ref"
+                    ],
+                    [
+                      "subs",
+                      [
+                        [
+                          "id",
+                          "v"
+                        ],
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "filename",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "*",
+                  [
+                    [
+                      "producer",
+                      "white_space"
+                    ]
+                  ],
+                  "a"
+                ],
+                [
+                  "+",
+                  [
+                    [
+                      "producer",
+                      "file_symbols"
+                    ]
+                  ],
+                  "f"
+                ],
+                [
+                  "*",
+                  [
+                    [
+                      "producer",
+                      "white_space"
+                    ]
+                  ],
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "subs",
+                        [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "var_ref"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "filename_or_any",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "filename",
+                  "f"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "subs",
+                        [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "%"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "any"
+                          ],
+                          [
+                            "lit",
+                            "%"
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "filename_or_pipe",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "filename",
+                  "f"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "subs",
+                        [
+                          [
+                            "id",
+                            "f"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  ">"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "redir"
+                          ],
+                          [
+                            "lit",
+                            ">"
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "filenames",
+        [
+          [
+            "+",
+            [
+              [
+                "producer",
+                "filename"
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "forps",
+        [
+          [
+            "+",
+            [
+              [
+                "producer",
+                "filename_or_pipe"
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "eol",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "char",
+                  "\n"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "\r\n"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "make_tree",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "wss"
+                ],
+                [
+                  "producer",
+                  "filename_or_any",
+                  "f"
+                ],
+                [
+                  "char",
+                  ":"
+                ],
+                [
+                  "producer",
+                  "filenames",
+                  "s"
+                ],
+                [
+                  "producer",
+                  "eol"
+                ],
+                [
+                  "*",
+                  [
+                    [
+                      "producer",
+                      "white_space"
+                    ]
+                  ],
+                  "a"
+                ],
+                [
+                  "producer",
+                  "forps",
+                  "b"
+                ],
+                [
+                  "+",
+                  [
+                    [
+                      "producer",
+                      "white_space_eol"
+                    ]
+                  ]
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "rule"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "f"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "s"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "wss"
+                ],
+                [
+                  "producer",
+                  "filename_or_any",
+                  "f"
+                ],
+                [
+                  "char",
+                  ":"
+                ],
+                [
+                  "producer",
+                  "eol"
+                ],
+                [
+                  "*",
+                  [
+                    [
+                      "producer",
+                      "white_space"
+                    ]
+                  ],
+                  "a"
+                ],
+                [
+                  "producer",
+                  "forps",
+                  "b"
+                ],
+                [
+                  "+",
+                  [
+                    [
+                      "producer",
+                      "white_space_eol"
+                    ]
+                  ]
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "rule"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "f"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "seq",
+                            []
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "wss"
+                ],
+                [
+                  "producer",
+                  "filenames",
+                  "f"
+                ],
+                [
+                  "char",
+                  ":"
+                ],
+                [
+                  "producer",
+                  "filenames",
+                  "s"
+                ],
+                [
+                  "producer",
+                  "eol"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "implicit_rule"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "f"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "s"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "alphanumerics",
+        [
+          [
+            "+",
+            [
+              [
+                "producer",
+                "alphanumeric"
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "var_file_list",
+        [
+          [
+            "*",
+            [
+              [
+                "producer",
+                "white_space"
+              ]
+            ]
+          ],
+          [
+            "producer",
+            "alphanumerics",
+            "v"
+          ],
+          [
+            "*",
+            [
+              [
+                "producer",
+                "white_space"
+              ]
+            ]
+          ],
+          [
+            "char",
+            "="
+          ],
+          [
+            "producer",
+            "filenames",
+            "l"
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "seq",
+                  [
+                    [
+                      "lit",
+                      "var"
+                    ],
+                    [
+                      "subs",
+                      [
+                        [
+                          "id",
+                          "v"
+                        ],
+                        []
+                      ]
+                    ],
+                    [
+                      "subs",
+                      [
+                        [
+                          "id",
+                          "l"
+                        ],
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "mt_or_var",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "make_tree",
+                  "m"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "subs",
+                        [
+                          [
+                            "id",
+                            "m"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "var_file_list",
+                  "v"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "subs",
+                        [
+                          [
+                            "id",
+                            "v"
+                          ],
+                          []
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "*",
+                  [
+                    [
+                      "char",
+                      " "
+                    ]
+                  ]
+                ],
+                [
+                  "char",
+                  "include"
+                ],
+                [
+                  "producer",
+                  "filenames",
+                  "f"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "lit",
+                            "include"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "f"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "gnu_make_main",
+        [
+          [
+            "*",
+            [
+              [
+                "producer",
+                "mt_or_var"
+              ]
+            ],
+            "m"
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "subs",
+                  [
+                    [
+                      "id",
+                      "m"
+                    ],
+                    []
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "num",
+        [
+          [
+            "+",
+            [
+              [
+                "ranges",
+                [
+                  "09"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "exprA",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "exprA",
+                  "a"
+                ],
+                [
+                  "char",
+                  "-"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "-"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "num"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "exprB",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "num"
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "exprB",
+                  "a"
+                ],
+                [
+                  "char",
+                  "-"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "-"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "exprC",
+        [
+          [
+            "producer",
+            "num",
+            "a"
+          ],
+          [
+            "*",
+            [
+              [
+                "dofirst",
+                [
+                  [
+                    "char",
+                    "-"
+                  ],
+                  [
+                    "producer",
+                    "num"
+                  ]
+                ]
+              ]
+            ],
+            "b"
+          ],
+          [
+            "host2",
+            [
+              [
+                "return",
+                [
+                  "seq",
+                  [
+                    [
+                      "subs",
+                      [
+                        [
+                          "id",
+                          "a"
+                        ],
+                        []
+                      ]
+                    ],
+                    [
+                      "lit",
+                      "-"
+                    ],
+                    [
+                      "subs",
+                      [
+                        [
+                          "id",
+                          "b"
+                        ],
+                        []
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "xD",
+        [
+          [
+            "producer",
+            "exprD"
+          ]
+        ],
+        []
+      ],
+      [
+        "exprD",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "xD",
+                  "a"
+                ],
+                [
+                  "char",
+                  "-"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "-"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "num"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "exprE",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "num",
+                  "a"
+                ],
+                [
+                  "char",
+                  "+"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "+"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "num",
+                  "a"
+                ],
+                [
+                  "char",
+                  "-"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "-"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "term",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "term",
+                  "a"
+                ],
+                [
+                  "char",
+                  "+"
+                ],
+                [
+                  "producer",
+                  "fact",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "+"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "term",
+                  "a"
+                ],
+                [
+                  "char",
+                  "-"
+                ],
+                [
+                  "producer",
+                  "fact",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "-"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "fact"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "fact",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "fact",
+                  "a"
+                ],
+                [
+                  "char",
+                  "*"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "*"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "fact",
+                  "a"
+                ],
+                [
+                  "char",
+                  "/"
+                ],
+                [
+                  "producer",
+                  "num",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "lit",
+                            "/"
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "producer",
+                  "num"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "start",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "ones",
+                  "a"
+                ],
+                [
+                  "char",
+                  "2",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "1",
+                  "a"
+                ],
+                [
+                  "producer",
+                  "start",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "!",
+                  [
+                    [
+                      "ranges",
+                      [
+                        "\u0000ÿ"
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "ones",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "ones",
+                  "a"
+                ],
+                [
+                  "char",
+                  "1",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "1"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "rr",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "char",
+                  "1",
+                  "a"
+                ],
+                [
+                  "producer",
+                  "rr",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "1"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "lr",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "lr",
+                  "a"
+                ],
+                [
+                  "char",
+                  "1",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "1"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "lr1",
+        [
+          [
+            "choices",
+            [
+              [
+                [
+                  "producer",
+                  "x",
+                  "a"
+                ],
+                [
+                  "char",
+                  "1",
+                  "b"
+                ],
+                [
+                  "host2",
+                  [
+                    [
+                      "return",
+                      [
+                        "seq",
+                        [
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "a"
+                              ],
+                              []
+                            ]
+                          ],
+                          [
+                            "subs",
+                            [
+                              [
+                                "id",
+                                "b"
+                              ],
+                              []
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "char",
+                  "1"
+                ]
+              ]
+            ]
+          ]
+        ],
+        []
+      ],
+      [
+        "x",
+        [
+          [
+            "producer",
+            "lr1"
+          ]
+        ],
+        []
+      ]
+    ]
+  }
+}

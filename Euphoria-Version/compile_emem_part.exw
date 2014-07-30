@@ -1,0 +1,15 @@
+include emeta.e
+
+constant cached_file_name = "emem_part.cache"
+constant uncached_file_name = "emem_part.e"
+constant cached_file_info = dir(cached_file_name)
+constant uncached_file_info = dir(uncached_file_name)
+
+if not atom(cached_file_info) and compare(cached_file_info[1][D_YEAR..D_SECOND], uncached_file_info[1][D_YEAR..D_SECOND]) >= 0 then --if no changes then
+	puts(1, "using " & cached_file_name & "\n")
+	cached_named_ps(cached_file_name, {uncached_file_name})
+else
+	puts(1, "creating " & cached_file_name & " from " & uncached_file_name & "\n")
+	eat("emem_part.e")
+	serial_file(cached_file_name,{parsers,named_parsers})
+end if

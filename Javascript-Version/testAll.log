@@ -1,0 +1,316 @@
+APPLY_RULE {"R":"call_ret","P":0}
+  MEMO {"RULE":"call_ret","POS":"0"}
+  MEMO-> undefined
+  HEADS {"POSITION":"0"}
+  HEADS-> undefined
+  class LR {"seed":false,"rule":"call_ret"}
+  class MEMOENTRY {"ans":{"seed":false,"rule":"call_ret","type":"LR"},"pos":"0"}
+  MEMO_STORE {"RULE":"call_ret","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"call_ret","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+  choices
+    producer
+  APPLY_RULE {"R":"call_func","P":0}
+    MEMO {"RULE":"call_func","POS":"0"}
+    MEMO-> undefined
+    HEADS {"POSITION":"0"}
+    HEADS-> undefined
+    class LR {"seed":false,"rule":"call_func"}
+    class MEMOENTRY {"ans":{"seed":false,"rule":"call_func","type":"LR"},"pos":"0"}
+    MEMO_STORE {"RULE":"call_func","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"call_func","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+
+      choices
+        producer
+    APPLY_RULE {"R":"ws","P":0}
+      MEMO {"RULE":"ws","POS":"0"}
+      MEMO-> undefined
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+      class LR {"seed":false,"rule":"ws"}
+      class MEMOENTRY {"ans":{"seed":false,"rule":"ws","type":"LR"},"pos":"0"}
+      MEMO_STORE {"RULE":"ws","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"ws","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+          *
+            producer
+      APPLY_RULE {"R":"wc","P":0}
+        MEMO {"RULE":"wc","POS":"0"}
+        MEMO-> undefined
+        HEADS {"POSITION":"0"}
+        HEADS-> undefined
+        class LR {"seed":false,"rule":"wc"}
+        class MEMOENTRY {"ans":{"seed":false,"rule":"wc","type":"LR"},"pos":"0"}
+        MEMO_STORE {"RULE":"wc","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"wc","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+              choices
+                producer
+        APPLY_RULE {"R":"space","P":0}
+          MEMO {"RULE":"space","POS":"0"}
+          MEMO-> undefined
+          HEADS {"POSITION":"0"}
+          HEADS-> undefined
+          class LR {"seed":false,"rule":"space"}
+          class MEMOENTRY {"ans":{"seed":false,"rule":"space","type":"LR"},"pos":"0"}
+          MEMO_STORE {"RULE":"space","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"space","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+                  ranges
+        APPLY_RULE-> undefined
+producer space failure undefined
+                producer
+        APPLY_RULE {"R":"comment","P":0}
+          MEMO {"RULE":"comment","POS":"0"}
+          MEMO-> undefined
+          HEADS {"POSITION":"0"}
+          HEADS-> undefined
+          class LR {"seed":false,"rule":"comment"}
+          class MEMOENTRY {"ans":{"seed":false,"rule":"comment","type":"LR"},"pos":"0"}
+          MEMO_STORE {"RULE":"comment","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"comment","type":"LR"},"pos":"0","type":"MEMOENTRY"
+}}
+                  choices
+                    producer
+          APPLY_RULE {"R":"comtag","P":0}
+            MEMO {"RULE":"comtag","POS":"0"}
+            MEMO-> undefined
+            HEADS {"POSITION":"0"}
+            HEADS-> undefined
+            class LR {"seed":false,"rule":"comtag"}
+            class MEMOENTRY {"ans":{"seed":false,"rule":"comtag","type":"LR"},"pos":"0"}
+            MEMO_STORE {"RULE":"comtag","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"comtag","type":"LR"},"pos":"0","type":"MEMOENTRY"
+}}
+                      choices
+                        char
+                           "--"
+                           0
+                           false
+                        char
+                           "=>"
+                           0
+                           false
+          APPLY_RULE-> undefined
+producer comtag failure undefined
+                    producer
+          APPLY_RULE {"R":"comtag","P":0}
+            MEMO {"RULE":"comtag","POS":"0"}
+            MEMO-> {"pos":0,"type":"MEMOENTRY"}
+            HEADS {"POSITION":"0"}
+            HEADS-> undefined
+          APPLY_RULE-> undefined
+producer comtag failure undefined
+        APPLY_RULE-> undefined
+producer comment failure undefined
+                producer
+        APPLY_RULE {"R":"eol","P":0}
+          MEMO {"RULE":"eol","POS":"0"}
+          MEMO-> undefined
+          HEADS {"POSITION":"0"}
+          HEADS-> undefined
+          class LR {"seed":false,"rule":"eol"}
+          class MEMOENTRY {"ans":{"seed":false,"rule":"eol","type":"LR"},"pos":"0"}
+          MEMO_STORE {"RULE":"eol","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"eol","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+                  choices
+                    char
+                       "\r"
+                       0
+                       false
+                    char
+                       "\n"
+                       0
+                       false
+        APPLY_RULE-> undefined
+producer eol failure undefined
+      APPLY_RULE-> undefined
+producer wc failure undefined
+* success ""
+          host2
+    APPLY_RULE-> []
+producer ws success []
+        producer
+    APPLY_RULE {"R":"eid","P":0}
+      MEMO {"RULE":"eid","POS":"0"}
+      MEMO-> undefined
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+      class LR {"seed":false,"rule":"eid"}
+      class MEMOENTRY {"ans":{"seed":false,"rule":"eid","type":"LR"},"pos":"0"}
+      MEMO_STORE {"RULE":"eid","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"eid","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+          ranges
+    APPLY_RULE-> undefined
+producer eid failure undefined
+        producer
+    APPLY_RULE {"R":"ws","P":0}
+      MEMO {"RULE":"ws","POS":"0"}
+      MEMO-> {"ans":[],"pos":0,"type":"MEMOENTRY"}
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+    APPLY_RULE-> []
+producer ws success []
+        producer
+    APPLY_RULE {"R":"eid","P":0}
+      MEMO {"RULE":"eid","POS":"0"}
+      MEMO-> {"pos":0,"type":"MEMOENTRY"}
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+    APPLY_RULE-> undefined
+producer eid failure undefined
+  APPLY_RULE-> undefined
+producer call_func failure undefined
+    char
+       "("
+       0
+       false
+    producer
+  APPLY_RULE {"R":"eid","P":0}
+    MEMO {"RULE":"eid","POS":"0"}
+    MEMO-> {"pos":0,"type":"MEMOENTRY"}
+    HEADS {"POSITION":"0"}
+    HEADS-> undefined
+  APPLY_RULE-> undefined
+producer eid failure undefined
+    producer
+  APPLY_RULE {"R":"eid","P":0}
+    MEMO {"RULE":"eid","POS":"0"}
+    MEMO-> {"pos":0,"type":"MEMOENTRY"}
+    HEADS {"POSITION":"0"}
+    HEADS-> undefined
+  APPLY_RULE-> undefined
+producer eid failure undefined
+    producer
+  APPLY_RULE {"R":"num","P":0}
+    MEMO {"RULE":"num","POS":"0"}
+    MEMO-> undefined
+    HEADS {"POSITION":"0"}
+    HEADS-> undefined
+    class LR {"seed":false,"rule":"num"}
+    class MEMOENTRY {"ans":{"seed":false,"rule":"num","type":"LR"},"pos":"0"}
+    MEMO_STORE {"RULE":"num","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"num","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+      choices
+        producer
+    APPLY_RULE {"R":"int","P":0}
+      MEMO {"RULE":"int","POS":"0"}
+      MEMO-> undefined
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+      class LR {"seed":false,"rule":"int"}
+      class MEMOENTRY {"ans":{"seed":false,"rule":"int","type":"LR"},"pos":"0"}
+      MEMO_STORE {"RULE":"int","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"int","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+          choices
+            char
+               "+"
+               0
+               false
+            char
+               "-"
+               0
+               false
+            producer
+      APPLY_RULE {"R":"ldigs","P":0}
+        MEMO {"RULE":"ldigs","POS":"0"}
+        MEMO-> undefined
+        HEADS {"POSITION":"0"}
+        HEADS-> undefined
+        class LR {"seed":false,"rule":"ldigs"}
+        class MEMOENTRY {"ans":{"seed":false,"rule":"ldigs","type":"LR"},"pos":"0"}
+        MEMO_STORE {"RULE":"ldigs","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"ldigs","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+              choices
+                producer
+        APPLY_RULE {"R":"ldigs","P":0}
+          MEMO {"RULE":"ldigs","POS":"0"}
+          MEMO-> {"ans":{"seed":false,"rule":"ldigs","type":"LR"},"pos":"0","type":"MEMOENTRY"}
+          HEADS {"POSITION":"0"}
+          HEADS-> undefined
+          class HEAD {"rule":"ldigs","involvedSet":[],"evalSet":[]}
+        APPLY_RULE-> false
+producer ldigs success false
+{ id: { a: false } }
+                producer
+        APPLY_RULE {"R":"ldig","P":"0"}
+          MEMO {"RULE":"ldig","POS":"\"0\""}
+          MEMO-> undefined
+          HEADS {"POSITION":"\"0\""}
+          HEADS-> undefined
+          class LR {"seed":false,"rule":"ldig"}
+          class MEMOENTRY {"ans":{"seed":false,"rule":"ldig","type":"LR"},"pos":"\"0\""}
+          MEMO_STORE {"RULE":"ldig","POS":"\"0\"","MEMOENTRY":{"ans":{"seed":false,"rule":"ldig","type":"LR"},"pos":"\"0\"","type":"MEMOENTR
+Y"}}
+                  ranges
+        APPLY_RULE-> undefined
+producer ldig failure undefined
+                producer
+        APPLY_RULE {"R":"ldig","P":0}
+          MEMO {"RULE":"ldig","POS":"0"}
+          MEMO-> undefined
+          HEADS {"POSITION":"0"}
+          HEADS-> undefined
+          class LR {"seed":false,"rule":"ldig"}
+          class MEMOENTRY {"ans":{"seed":false,"rule":"ldig","type":"LR"},"pos":"0"}
+          MEMO_STORE {"RULE":"ldig","POS":"0","MEMOENTRY":{"ans":{"seed":false,"rule":"ldig","type":"LR"},"pos":"0","type":"MEMOENTRY"}}
+                  ranges
+        APPLY_RULE-> undefined
+producer ldig failure undefined
+      APPLY_RULE-> false
+producer ldigs success false
+{ id: { x: false } }
+            host2
+host2 false
+           listing [ false, false ]
+           rseq false
+{ pos: 0 }
+             goodChoice false
+         listing [ false ]
+         rseq false
+{ pos: 0 }
+    APPLY_RULE-> false
+producer int success false
+        char
+           "."
+           0
+           false
+        producer
+    APPLY_RULE {"R":"int","P":0}
+      MEMO {"RULE":"int","POS":"0"}
+      MEMO-> {"ans":false,"pos":0,"type":"MEMOENTRY"}
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+    APPLY_RULE-> false
+producer int success false
+        char
+           "."
+           0
+           false
+        producer
+    APPLY_RULE {"R":"int","P":0}
+      MEMO {"RULE":"int","POS":"0"}
+      MEMO-> {"ans":false,"pos":0,"type":"MEMOENTRY"}
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+    APPLY_RULE-> false
+producer int success false
+        ranges
+        producer
+    APPLY_RULE {"R":"int","P":0}
+      MEMO {"RULE":"int","POS":"0"}
+      MEMO-> {"ans":false,"pos":0,"type":"MEMOENTRY"}
+      HEADS {"POSITION":"0"}
+      HEADS-> undefined
+    APPLY_RULE-> false
+producer int success false
+       listing [ false ]
+       rseq false
+{ pos: 0 }
+         goodChoice false
+     listing [ false ]
+     rseq false
+{ pos: 0 }
+  APPLY_RULE-> false
+producer num success false
+{ id: { x: false } }
+    host2
+host2 [
+  "lit",
+  false
+]
+   listing [ false, [ 'lit', false ] ]
+   rseq [ 'lit', false ]
+{ pos: 0 }
+     goodChoice [ 'lit', false ]
+ listing [ [ 'lit', false ] ]
+ rseq [ 'lit', false ]
+{ pos: 0 }
+APPLY_RULE-> ["lit",false]
+topParse         call_ret ["lit",false]
+[ 'lit', false ]
+Press any key to continue . . .
